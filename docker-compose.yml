@@ -1,0 +1,21 @@
+version: '3.6'
+
+services: 
+  dev:
+    image: jss-sample:dev
+    build:
+      context: .
+      args:
+        NODE_ENV: development
+      target: install
+      # we are mounting the source code for a nicer dev experience
+      # we need both volumes
+      # node_modules as otherwise it would get overriden
+    volumes:
+      - ./:/src
+      - /src/node_modules
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    command:
+      - start
