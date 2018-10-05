@@ -21,10 +21,10 @@ FROM install as build
 # TODO Maybe not everything needs to be copied
 COPY ./ ./
 
-COPY --from=install /src/node_modules/ /app/node_modules/
-
 RUN jss build
 
 FROM nginx:alpine as app
+
+COPY ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=build /src/build/ /usr/share/nginx/html
