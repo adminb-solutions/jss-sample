@@ -1,0 +1,104 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "JSS: Start connected",
+            "type": "shell",
+            "command": ".\\docker\\scripts\\Run-JSS.ps1",
+            "args": [                
+                "-Command",
+                "start:connected",
+                "-Interactive"                
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Wipe volume folders",
+            "type": "shell",
+            "command": ".\\docker\\scripts\\Delete-VolumeFolders.ps1",
+            "presentation": {
+                "echo": false,
+                "reveal": "never",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "JSS: Build CLI container",
+            "type": "shell",
+            "command": ".\\docker\\scripts\\Build-JSS.ps1",
+            "args": [
+                "-Context",
+                "${workspaceFolder}"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "JSS: Copy Config",
+            "type": "shell",
+            "command": ".\\docker\\scripts\\Run-JSS.ps1",
+            "args": [
+                "-Command",
+                "deploy config",
+                "-Interactive"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "JSS: Deploy Files",
+            "type": "shell",
+            "command": ".\\docker\\scripts\\Run-JSS.ps1",
+            "args": [
+                "-Command",
+                "deploy files",
+                "-Interactive"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "JSS: Deploy Items",
+            "type": "shell",
+            "command": ".\\docker\\scripts\\Run-JSS.ps1",
+            "args": [
+                "-Command",
+                "deploy items -c -d",
+                "-Network",
+                "sitecore_app_net",
+                "-Interactive"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
