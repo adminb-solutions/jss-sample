@@ -1,0 +1,1 @@
+This folder is mounted to the xonnect container for it to write all the logs

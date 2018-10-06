@@ -1,0 +1,1 @@
+This folder is mounted to the sitecore container for it to write all the Sitecore logs
