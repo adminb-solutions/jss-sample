@@ -16,10 +16,12 @@ RUN npm install
 
 ENTRYPOINT [ "jss" ]
 
-FROM install as build
+FROM install as cli
 
 # TODO Maybe not everything needs to be copied
 COPY ./ ./
+
+FROM cli as build
 
 RUN jss build
 
