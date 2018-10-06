@@ -22,3 +22,7 @@ yarn-error.log*
 
 scjssconfig.json
 *.deploysecret.config
+
+.logs/
+
+docker/sitecore/workspace/

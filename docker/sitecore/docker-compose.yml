@@ -1,0 +1,60 @@
+version: '2.3'
+
+services:
+  sitecore:
+    cpu_count: 6
+    image: samplewebapp_sitecore:latest
+    build: 
+      context: .
+      dockerfile: sitecore.dockerfile            
+    volumes:
+      - .\.logs\sitecore:c:\inetpub\wwwroot\sitecore\App_Data\logs
+      - .\workspace:c:\workspace
+      - .\serialization:c:\inetpub\wwwroot\sitecore\App_Data\serialization
+    depends_on:
+      - xconnect
+      - mssql
+      - solr
+    networks:
+      app_net:
+        ipv4_address: 172.16.1.3
+
+  xconnect:
+    image: sitecore-docker_xconnect:latest
+    volumes:
+      - .\.logs\xconnect:C:\inetpub\wwwroot\xconnect\App_data\Logs
+    networks:
+      app_net:
+        ipv4_address: 172.16.1.5    
+    depends_on:
+      - mssql
+      - solr
+
+  mssql:
+    image: sitecore-jss_mssql:latest
+    env_file: 
+      - mssql.env
+    mem_limit: 2048m
+    cpu_count: 4
+    networks:
+      app_net:
+        ipv4_address: 172.16.1.2
+
+  solr:
+    image: sitecore-docker_solr:latest
+    env_file: 
+      - solr.env
+    mem_limit: 4096m
+    networks:
+      app_net:
+        ipv4_address: 172.16.1.4
+
+
+networks:
+  app_net:
+    ipam:
+      driver: default
+      config:
+        -
+          subnet: 172.16.1.0/24
+          gateway: 172.16.1.1
